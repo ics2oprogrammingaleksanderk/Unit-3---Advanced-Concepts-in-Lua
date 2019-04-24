@@ -62,12 +62,13 @@ local lArrow
 
 local motionx = 0
 local SPEED = 6
-local LINEAR_VELOCITY = -100
+local LINEAR_VELOCITY = -200
 local GRAVITY = 5
 
 local leftW 
 local topW
 local floor
+local rightW
 
 local ball1
 local ball2
@@ -294,6 +295,7 @@ local function AddPhysicsBodies()
     physics.addBody(leftW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(topW, "static", {density=1, friction=0.3, bounce=0.2} )
     physics.addBody(floor, "static", {density=1, friction=0.3, bounce=0.2} )
+    physics.addBody(rightW, "static", {density=1, friction=0.3, bounce=0.2} )
 
     physics.addBody(ball1, "static",  {density=0, friction=0, bounce=0} )
     physics.addBody(ball2, "static",  {density=0, friction=0, bounce=0} )
@@ -475,6 +477,7 @@ function scene:create( event )
 
     -- Insert objects into the scene group in order to ONLY be associated with this scene
     sceneGroup:insert( uArrow)
+    sceneGroup:insert( lArrow)
 
     --WALLS--
     leftW = display.newLine( 0, 0, 0, display.contentHeight)
