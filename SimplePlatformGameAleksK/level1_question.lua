@@ -139,7 +139,6 @@ local function DisplayQuestion()
     --creating random numbers
     firstNumber = math.random (0,15)
     secondNumber = math.random (0,15)
-    thirdNumber = math.random (0,15)
 
     -- calculate answer
     answer = firstNumber + secondNumber
@@ -147,11 +146,12 @@ local function DisplayQuestion()
     -- calculate wrong answers
     wrongAnswer1 = answer + math.random(1, 3)
     wrongAnswer2 = answer + math.random(4, 6)
-    wrongAnswer2 = answer - math.random(1, 3)
+    wrongAnswer3 = answer - math.random(1, 3)
 
 
     --creating the question depending on the selcetion number
-    questionText.text = firstNumber .. " + " .. secondNumber .. " ="
+    questionText.text = firstNumber .. " + " .. secondNumber .. " = "
+
 
     --creating answer text from list it corispondes with the animals list
     answerText.text = answer
@@ -166,7 +166,7 @@ end
 local function PositionAnswers()
 
     --creating random start position in a cretain area
-    answerPosition = math.random(1,3)
+    answerPosition = math.random(1,4)
 
     if (answerPosition == 1) then
 
@@ -211,7 +211,7 @@ local function PositionAnswers()
         wrongText3.x = X1
         wrongText3.y = Y1
 
-    elseif (answerPosition == 3) then
+    elseif (answerPosition == 4) then
 
         answerText.x = X1
         answerText.y = Y2
@@ -261,8 +261,8 @@ function scene:create( event )
     wrongText1.anchorX = 0
     wrongText2 = display.newText("", X1, Y1, Arial, 75)
     wrongText2.anchorX = 0
-    wrongText2 = display.newText("", X2, Y1, Arial, 75)
-    wrongText2.anchorX = 0    
+    wrongText3 = display.newText("", X2, Y1, Arial, 75)
+    wrongText3.anchorX = 0    
 
     -----------------------------------------------------------------------------------------
 
