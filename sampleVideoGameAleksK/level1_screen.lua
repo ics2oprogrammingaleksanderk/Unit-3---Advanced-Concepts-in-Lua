@@ -30,7 +30,9 @@ local scene = composer.newScene( sceneName )
 
 -- The local variables for this scene
 local bkg_image
-
+local logocar = display.newImage("Images/CompanyLogo.png", 0, 0)
+local dot = display.newImage("Images/dot.png", 900, 490)
+local scrollSpeed = 3
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -79,7 +81,14 @@ function scene:show( event )
         -- Called when the scene is now on screen.
         -- Insert code here to make the scene come alive.
         -- Example: start timers, begin animation, play audio, etc.
-
+        logocar.x = display.contentWidth*0.6/8
+        logocar.y = display.contentHeight*6.2/8
+        logocar:scale(0.1, 0.1)
+        if (logocar.x == 670) then
+            scrollspeed.x == 2 
+            (scrollspeed.y == -2) until
+            logocar.y =  490
+        end
     end
 
 end --function scene:show( event )

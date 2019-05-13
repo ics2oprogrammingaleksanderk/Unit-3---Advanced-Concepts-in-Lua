@@ -9,7 +9,6 @@
 -----------------------------------------------------------------------------------------
 -- INITIALIZATIONS
 -----------------------------------------------------------------------------------------
-
 -- Use Composer Library
 local composer = require( "composer" )
 
@@ -29,13 +28,21 @@ sceneName = "main_menu"
 local scene = composer.newScene( sceneName )
 
 -----------------------------------------------------------------------------------------
+--GLOBAL VARIABLES
+-----------------------------------------------------------------------------------------
+soundOn = true
+-----------------------------------------------------------------------------------------
 -- LOCAL VARIABLES
 -----------------------------------------------------------------------------------------
 
 local bkg_image
 local playButton
 local creditsButton
-
+-----------------------------------------------------------------------------------------
+--LOCAL SOUNDS
+-----------------------------------------------------------------------------------------
+local bkgSound = audio.loadStream("Sounds/bkgs.mp3")
+local bkgSoundChannel
 -----------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -73,7 +80,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image and set it to the center of the screen
-    bkg_image = display.newImage("Images/main_menu.png")
+    bkg_image = display.newImage("Images/main_menu..jpg")
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -91,19 +98,21 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------   
 
     -- Creating Play Button
-    playButton = widget.newButton( 
+    playButton = widget.newButton
         {   
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth/2,
-            y = display.contentHeight*7/8,
+            y = display.contentHeight*3.8/8,
+            width = 200,
+            height = 200,
 
             -- Insert the images here
-            defaultFile = "Images/Start Button Unpressed.png",
-            overFile = "Images/Start Button Pressed.png",
+            defaultFile = "Images/PlayButtonUnpressed.png",
+            overFile = "Images/PlayButtonPressed.png",
 
             -- When the button is released, call the Level1 screen transition function
             onRelease = Level1ScreenTransition          
-        } )
+        } 
 
     -----------------------------------------------------------------------------------------
 
@@ -113,10 +122,11 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*7/8,
             y = display.contentHeight*7/8,
-
+            width = 200,
+            height = 100,
             -- Insert the images here
-            defaultFile = "Images/Credits Button Unpressed.png",
-            overFile = "Images/Credits Button Pressed.png",
+            defaultFile = "Images/CreditsButtonUnpressed.png",
+            overFile = "Images/CreditsButtonPressed.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = CreditsTransition
@@ -130,10 +140,11 @@ function scene:create( event )
             -- Set its position on the screen relative to the screen size
             x = display.contentWidth*1/8,
             y = display.contentHeight*7/8,
-           
+            width = 200,
+            height = 100,
             -- Insert the images here
-            defaultFile = "Images/Instructions Button Unpressed.png",
-            overFile = "Images/Instructions Button Pressed.png",
+            defaultFile = "Images/InstructionsButtonUnpressed.png",
+            overFile = "Images/InstructionsButtonPressed.png",
 
             -- When the button is released, call the Credits transition function
             onRelease = InstructionsTransition
@@ -144,8 +155,8 @@ function scene:create( event )
     sceneGroup:insert( playButton )
     sceneGroup:insert( creditsButton )
     sceneGroup:insert( instructionsButton )
-    
-    -- INSERT INSTRUCTIONS BUTTON INTO SCENE GROUP
+
+
 
 end -- function scene:create( event )   
 
@@ -167,14 +178,13 @@ function scene:show( event )
 
     -- Called when the scene is still off screen (but is about to come on screen).   
     if ( phase == "will" ) then
-       
     -----------------------------------------------------------------------------------------
 
     -- Called when the scene is now on screen.
     -- Insert code here to make the scene come alive.
     -- Example: start timers, begin animation, play audio, etc.
     elseif ( phase == "did" ) then       
-        
+        bkgSoundChannel = audio.play( bkgSound, {channel=1, loops=-1})
 
     end
 
@@ -203,6 +213,7 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        audio.stop(bkgSoundChannel)
     end
 
 end -- function scene:hide( event )

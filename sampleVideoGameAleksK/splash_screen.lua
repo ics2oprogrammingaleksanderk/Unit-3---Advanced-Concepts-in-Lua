@@ -6,6 +6,8 @@
 -- Description: This is the splash screen of the game. It displays the 
 -- company logo that...
 -----------------------------------------------------------------------------------------
+--hide the status bar
+display.setStatusBar(display.HiddenStatusBar)
 
 -- Use Composer Library
 local composer = require( "composer" )
@@ -51,11 +53,12 @@ end
 local function moveSmoke()
    smoke.x = smoke.x + scrollXSpeed
 end
+
+
 local function MoveText()
     -- add scroll speed
     RMgames.x = RMgames.x + scrollXSpeed2
 end
-
 -- The function that will go to the main menu 
 local function gotoMainMenu()
     composer.gotoScene( "main_menu" )

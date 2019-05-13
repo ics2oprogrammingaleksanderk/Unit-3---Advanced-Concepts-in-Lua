@@ -251,6 +251,7 @@ local function TouchListenerWrongAnswer3(touch)
     
         end
 end
+
 -- Function that adds the touch listeners to each of the answer objects
 local function AddTextObjectListeners()
 
