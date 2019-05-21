@@ -32,9 +32,9 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 local logocar = display.newImage("Images/CompanyLogo.png", 0, 0)
-local scrollSpeed = 1.15
+local scrollSpeed = 1.4
 local scrollSpeed2 = -1
-local scrollSpeed3 = -1.15
+local scrollSpeed3 = -1
 local scrollSpeed4 = -1
 
 -----------------------------------------------------------------------------------------
@@ -45,26 +45,27 @@ local function AskQuestion()
 
 end
 
+local function MovelogocarDown(event)
+    logocar.x = logocar.x - scrollSpeed3
+    logocar.y = logocar.y - scrollSpeed4
+end
+
+local function MovelogocarRight(event)
+    logocar.x = logocar.x + scrollSpeed
+end
 local function Movelogocar(event)
     logocar.x = logocar.x + scrollSpeed
     logocar.y = logocar.y + scrollSpeed2
-    if (logocar.x >= 657) then
+    if (logocar.x >= 700) then
+        Runtime:removeEventListener("enterFrame", MovelogocarDown)
+        Runtime:addEventListener("enterFrame", MovelogocarRight)
+    elseif (logocar.x >= 675) then
         Runtime:removeEventListener("enterFrame", Movelogocar)
         -- Ask another question
         Runtime:addEventListener("enterFrame", MovelogocarDown)
     end
 end
 
-local function MovelogocarDown(event)
-    logocar.x = logocar.x - scrollSpeed3
-    logocar.y = logocar.y - scrollSpeed4
-    timer.performWithDelay(6000, Movelogocar2)   
-end
-
-local function Stop()
-    transition.cancel(Movelogocar)
-    timer.performWithDelay(1000, Stop)
-end 
 
 
 -------------------------------------------------------------
@@ -84,7 +85,7 @@ function scene:create( event )
     -----------------------------------------------------------------------------------------
 
     -- Insert the background image
-    bkg_image = display.newImageRect("Images/level1_screen.png", display.contentWidth, display.contentHeight)
+    bkg_image = display.newImageRect("Images/Level1Screen.png", display.contentWidth, display.contentHeight)
     bkg_image.x = display.contentCenterX
     bkg_image.y = display.contentCenterY
     bkg_image.width = display.contentWidth
@@ -126,9 +127,8 @@ function scene:show( event )
 
         -- Ask a question
 
-         Runtime:addEventListener("enterFrame", Movelogocar)
-        --Runtime:addEventListener("enterFrame", MovelogocarDown)
-        --Runtime:addEventListener("enterFrame", Stop)
+        Runtime:addEventListener("enterFrame", Movelogocar)
+
     end
 end 
 -----------------------------------------------------------------------------------------
