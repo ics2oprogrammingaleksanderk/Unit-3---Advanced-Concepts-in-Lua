@@ -14,6 +14,7 @@
 local composer = require( "composer" )
 local widget = require( "widget" )
 
+
 -----------------------------------------------------------------------------------------
 
 -- Naming Scene
@@ -31,8 +32,45 @@ local scene = composer.newScene( sceneName )
 -- The local variables for this scene
 local bkg_image
 local logocar = display.newImage("Images/CompanyLogo.png", 0, 0)
-local dot = display.newImage("Images/dot.png", 900, 490)
-local scrollSpeed = 3
+local scrollSpeed = 1.15
+local scrollSpeed2 = -1
+local scrollSpeed3 = -1.15
+local scrollSpeed4 = -1
+
+-----------------------------------------------------------------------------------------
+-- LOCAL SCENE FUNCTIONS
+-----------------------------------------------------------------------------------------
+
+local function AskQuestion()
+
+end
+
+local function Movelogocar(event)
+    logocar.x = logocar.x + scrollSpeed
+    logocar.y = logocar.y + scrollSpeed2
+    if (logocar.x >= 657) then
+        Runtime:removeEventListener("enterFrame", Movelogocar)
+        -- Ask another question
+        Runtime:addEventListener("enterFrame", MovelogocarDown)
+    end
+end
+
+local function MovelogocarDown(event)
+    logocar.x = logocar.x - scrollSpeed3
+    logocar.y = logocar.y - scrollSpeed4
+    timer.performWithDelay(6000, Movelogocar2)   
+end
+
+local function Stop()
+    transition.cancel(Movelogocar)
+    timer.performWithDelay(1000, Stop)
+end 
+
+
+-------------------------------------------------------------
+--Objects
+-------------------------------------------------------------
+
 -----------------------------------------------------------------------------------------
 -- GLOBAL SCENE FUNCTIONS
 -----------------------------------------------------------------------------------------
@@ -74,6 +112,7 @@ function scene:show( event )
     if ( phase == "will" ) then
 
         -- Called when the scene is still off screen (but is about to come on screen).
+    
     -----------------------------------------------------------------------------------------
 
     elseif ( phase == "did" ) then
@@ -84,15 +123,14 @@ function scene:show( event )
         logocar.x = display.contentWidth*0.6/8
         logocar.y = display.contentHeight*6.2/8
         logocar:scale(0.1, 0.1)
-        if (logocar.x == 670) then
-            scrollspeed.x == 2 
-            (scrollspeed.y == -2) until
-            logocar.y =  490
-        end
+
+        -- Ask a question
+
+         Runtime:addEventListener("enterFrame", Movelogocar)
+        --Runtime:addEventListener("enterFrame", MovelogocarDown)
+        --Runtime:addEventListener("enterFrame", Stop)
     end
-
-end --function scene:show( event )
-
+end 
 -----------------------------------------------------------------------------------------
 
 -- The function called when the scene is issued to leave the screen
@@ -101,7 +139,6 @@ function scene:hide( event )
     -- Creating a group that associates objects with the scene
     local sceneGroup = self.view
     local phase = event.phase
-
     -----------------------------------------------------------------------------------------
 
     if ( phase == "will" ) then
@@ -113,6 +150,9 @@ function scene:hide( event )
 
     elseif ( phase == "did" ) then
         -- Called immediately after scene goes off screen.
+        Runtime:removeEventListener("enterFrame", Movelogocar)
+        Runtime:removeEventListener("enterFrame", MovelogocarDown)
+        Runtime:removeEventListener("enterFrame", Stop)
     end
 
 end --function scene:hide( event )
@@ -142,7 +182,6 @@ scene:addEventListener( "create", scene )
 scene:addEventListener( "show", scene )
 scene:addEventListener( "hide", scene )
 scene:addEventListener( "destroy", scene )
-
 -----------------------------------------------------------------------------------------
 
 return scene
